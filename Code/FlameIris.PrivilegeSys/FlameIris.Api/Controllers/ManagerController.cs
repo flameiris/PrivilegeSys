@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FlameIris.Api.Models.Filters;
 using FlameIris.Application.ManagerApp;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +20,10 @@ namespace FlameIris.Api.Controllers
             _managerService = managerService;
         }
 
-        //public JsonResult GetList()
-        //{
+        public JsonResult GetList(ManagerFilter filter)
+        {
 
-        //}
+            return new JsonResult(_managerService.GetList());
+        }
     }
 }

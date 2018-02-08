@@ -22,6 +22,8 @@ namespace FlameIris.Api
         {
             Configuration = configuration;
             var builder = new ConfigurationBuilder()
+                     //注意：下方加载了autofac.json配置后，就相当于重置了所有默认的配置加载，appsetting也要在这里手动加载
+                     .AddJsonFile("appsettings.json")
                      //加载配置文件，项目中的autofac.json 文件需要手动设置编译复制到输出目录，否则以下路径找不到文件
                      .AddJsonFile("autofac.json");
             Configuration = builder.Build();

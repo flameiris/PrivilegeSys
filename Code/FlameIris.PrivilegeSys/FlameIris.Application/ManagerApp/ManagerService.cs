@@ -31,5 +31,10 @@ namespace FlameIris.Application.ManagerApp
             };
             return _managerRepository.Insert(manager);
         }
+
+        public List<Manager> GetList()
+        {
+            return _managerRepository.GetAllList();
+        }
     }
 }

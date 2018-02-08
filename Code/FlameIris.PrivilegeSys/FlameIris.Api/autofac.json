@@ -2,7 +2,11 @@
   "modules": [
     {
       //设置读取依赖关系的位置，格式为 "type":"配置实体类与注入接口依赖关系的类全名称, 实体类所在程序集名称"
-      "type": "DemoAutofac.Service.ServiceModule, DemoAutofac.Service"
+      "type": "FlameIris.Application.ServiceModule, FlameIris.Application"
+    },
+    {
+      //设置读取依赖关系的位置，格式为 "type":"配置实体类与注入接口依赖关系的类全名称, 实体类所在程序集名称"
+      "type": "FlameIris.EntityFrameworkCore.ServiceModule, FlameIris.EntityFrameworkCore"
     }
   ]
 }

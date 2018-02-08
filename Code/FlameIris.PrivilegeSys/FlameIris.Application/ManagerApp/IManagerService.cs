@@ -9,5 +9,6 @@ namespace FlameIris.Application.ManagerApp
     public interface IManagerService
     {
         Manager Create(ManagerDto dto);
+        List<Manager> GetList();
     }
 }
