@@ -1,0 +1,13 @@
+﻿################################################################################
+# 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
+################################################################################
+
+/Code/FlameIris.PrivilegeSys/FlameIris.EntityFrameworkCore/obj
+/Code/FlameIris.PrivilegeSys/FlameIris.EntityFrameworkCore/bin/Debug/netcoreapp2.0
+/Code/FlameIris.PrivilegeSys/FlameIris.Domain/obj
+/Code/FlameIris.PrivilegeSys/FlameIris.Domain/bin/Debug/netcoreapp2.0
+/Code/FlameIris.PrivilegeSys/FlameIris.Application/obj
+/Code/FlameIris.PrivilegeSys/FlameIris.Application/bin/Debug/netcoreapp2.0
+/Code/FlameIris.PrivilegeSys/FlameIris.Api/obj
+/Code/FlameIris.PrivilegeSys/FlameIris.Api/bin/Debug/netcoreapp2.0
+/Code/FlameIris.PrivilegeSys/.vs/FlameIris.PrivilegeSys/v15
