@@ -11,10 +11,7 @@ namespace FlameIris.Application.ManagerApp
         Manager Create(ManagerDto dto);
         List<ManagerDto> GetList();
         ManagerDto GetModel(long id);
-        Manager Update(Manager manager);
-        bool Delete(long[] ids);
-
-
-
+        Manager Update(ManagerDto manager);
+        void Delete(long[] ids);
     }
 }

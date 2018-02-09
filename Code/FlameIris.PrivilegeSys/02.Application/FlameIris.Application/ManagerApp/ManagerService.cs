@@ -40,20 +40,15 @@ namespace FlameIris.Application.ManagerApp
         }
         public ManagerDto GetModel(long id)
         {
-            var manager = _managerRepository.FirstOrDefault(x => x.Id == id);
-            return Mapper.Map<ManagerDto>(manager);
+            return Mapper.Map<ManagerDto>(_managerRepository.FirstOrDefault(x => x.Id == id));
         }
-        public Manager Update(Manager manager)
+        public Manager Update(ManagerDto dto)
         {
-            return _managerRepository.Update(manager);
+            return _managerRepository.Update(Mapper.Map<Manager>(dto));
         }
-        public bool Delete(long[] ids)
+        public void Delete(long[] ids)
         {
             _managerRepository.Delete(x => ids.Contains(x.Id));
-            return true;
         }
-
-
-
     }
 }
