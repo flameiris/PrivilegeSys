@@ -10,7 +10,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FlameIris.EntityFrameworkCore\FlameIris.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\03.Domain\FlameIris.Domain\FlameIris.Domain.csproj" />
+    <ProjectReference Include="..\..\04.Infrastructure\FlameIris.EntityFrameworkCore\FlameIris.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

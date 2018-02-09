@@ -38,9 +38,10 @@ namespace FlameIris.Application.ManagerApp
         {
             return _managerRepository.GetAllList().Select(x => Mapper.Map<ManagerDto>(x)).ToList();
         }
-        public Manager GetModel(long id)
+        public ManagerDto GetModel(long id)
         {
-            return _managerRepository.FirstOrDefault(x => x.Id == id);
+            var manager = _managerRepository.FirstOrDefault(x => x.Id == id);
+            return Mapper.Map<ManagerDto>(manager);
         }
         public Manager Update(Manager manager)
         {

@@ -14,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 namespace FlameIris.Api
 {
@@ -26,7 +28,7 @@ namespace FlameIris.Api
                      //注意：下方加载了autofac.json配置后，就相当于重置了所有默认的配置加载，appsetting也要在这里手动加载
                      .AddJsonFile("appsettings.json")
                      //加载配置文件，项目中的autofac.json 文件需要手动设置编译复制到输出目录，否则以下路径找不到文件
-                     .AddJsonFile("autofac.json");
+                     .AddJsonFile("StaticConfig/autofac.json");
             Configuration = builder.Build();
             //初始化AutoMapper的映射关系
             FlameIrisMapper.Initialize();
@@ -43,6 +45,9 @@ namespace FlameIris.Api
 
             services.AddMvc();
 
+            //添加Logging
+            services.AddLogging();
+
             #region Autofac 配置
             var containerBuilder = new ContainerBuilder();
             //将原本注册在内置 DI 组件中的依赖迁移入 Autofac 中
@@ -56,7 +61,7 @@ namespace FlameIris.Api
             return new AutofacServiceProvider(container);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +69,11 @@ namespace FlameIris.Api
             }
 
             app.UseMvc();
+
+            #region NLog
+            loggerFactory.AddNLog();//添加NLog
+            env.ConfigureNLog("StaticConfig/nlog.config");//读取Nlog配置文件
+            #endregion
         }
     }
 }
