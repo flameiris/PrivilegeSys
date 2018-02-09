@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using FlameIris.Application.ManagerApp.Dtos;
 using FlameIris.Domain.Enities;
 using FlameIris.Domain.IRepositories;
+using AutoMapper;
+
 namespace FlameIris.Application.ManagerApp
 {
     public class ManagerService : IManagerService
@@ -31,10 +34,25 @@ namespace FlameIris.Application.ManagerApp
             };
             return _managerRepository.Insert(manager);
         }
-
-        public List<Manager> GetList()
+        public List<ManagerDto> GetList()
         {
-            return _managerRepository.GetAllList();
+            return _managerRepository.GetAllList().Select(x => Mapper.Map<ManagerDto>(x)).ToList();
         }
+        public Manager GetModel(long id)
+        {
+            return _managerRepository.FirstOrDefault(x => x.Id == id);
+        }
+        public Manager Update(Manager manager)
+        {
+            return _managerRepository.Update(manager);
+        }
+        public bool Delete(long[] ids)
+        {
+            _managerRepository.Delete(x => ids.Contains(x.Id));
+            return true;
+        }
+
+
+
     }
 }

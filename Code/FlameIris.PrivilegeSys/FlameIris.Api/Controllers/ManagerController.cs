@@ -22,8 +22,25 @@ namespace FlameIris.Api.Controllers
 
         public JsonResult GetList(ManagerFilter filter)
         {
-
             return new JsonResult(_managerService.GetList());
+        }
+        public JsonResult GetModel(long id)
+        {
+            return new JsonResult(_managerService.GetModel(id));
+        }
+        public JsonResult Delete(string idStr)
+        {
+            try
+            {
+                var idsStr = idStr.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                var ids = Array.ConvertAll(idsStr, x => Convert.ToInt64(x));
+                _managerService.Delete(ids);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult("参数错误");
+            }
+            return new JsonResult("OK");
         }
     }
 }

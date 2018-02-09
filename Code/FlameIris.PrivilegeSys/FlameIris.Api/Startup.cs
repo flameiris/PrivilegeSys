@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Configuration;
 using Autofac.Extensions.DependencyInjection;
+using FlameIris.Application;
 using FlameIris.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,6 +28,8 @@ namespace FlameIris.Api
                      //加载配置文件，项目中的autofac.json 文件需要手动设置编译复制到输出目录，否则以下路径找不到文件
                      .AddJsonFile("autofac.json");
             Configuration = builder.Build();
+            //初始化AutoMapper的映射关系
+            FlameIrisMapper.Initialize();
         }
 
         public IConfiguration Configuration { get; }
