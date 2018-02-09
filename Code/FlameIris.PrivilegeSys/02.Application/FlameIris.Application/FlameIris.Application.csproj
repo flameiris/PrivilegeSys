@@ -14,4 +14,10 @@
     <ProjectReference Include="..\..\04.Infrastructure\FlameIris.EntityFrameworkCore\FlameIris.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RoleApp\" />
+    <Folder Include="ModuleApp\" />
+    <Folder Include="Department\" />
+  </ItemGroup>
+
 </Project>

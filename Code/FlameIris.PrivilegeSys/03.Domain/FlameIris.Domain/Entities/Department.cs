@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FlameIris.Domain.Enities
 {
-    public partial class Department
+    public partial class Department : Entity<Int64>
     {
         public long Id { get; set; }
         public long ParentId { get; set; }
