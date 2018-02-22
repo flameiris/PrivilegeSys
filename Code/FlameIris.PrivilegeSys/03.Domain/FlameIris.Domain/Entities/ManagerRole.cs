@@ -7,5 +7,8 @@ namespace FlameIris.Domain.Enities
     {
         public long ManagerId { get; set; }
         public long RoleId { get; set; }
+
+        public Manager Manager { get; set; }
+        public Role Role { get; set; }
     }
 }

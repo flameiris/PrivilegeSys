@@ -50,6 +50,17 @@ namespace FlameIris.EntityFrameworkCore
             modelBuilder.Entity<ManagerRole>(entity =>
             {
                 entity.ToTable("ManagerRoles");
+                entity.HasOne(d => d.Manager)
+                 .WithMany(p => p.ManagerRoles)
+                 .HasForeignKey(d => d.ManagerId)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_ManagerRoles_Managers");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.ManagerRoles)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ManagerRoles_Roles");
             });
 
 
@@ -68,6 +79,12 @@ namespace FlameIris.EntityFrameworkCore
                        .IsRequired()
                        .HasMaxLength(30)
                        .IsUnicode(false);
+
+                   entity.HasOne(d => d.Dept)
+                   .WithMany(p => p.Managers)
+                   .HasForeignKey(d => d.DeptId)
+                   .OnDelete(DeleteBehavior.ClientSetNull)
+                   .HasConstraintName("FK_Managers_Departments");
                });
 
             modelBuilder.Entity<Module>(entity =>
