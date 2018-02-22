@@ -11,7 +11,7 @@ namespace FlameIris.Application.RoleApp
         Role Create(RoleDto dto);
         List<RoleDto> GetList();
         RoleDto GetModel(long id);
-        Role Update(RoleDto role);
+        Role Update(RoleDto dto);
         void Delete(long[] ids);
     }
 }

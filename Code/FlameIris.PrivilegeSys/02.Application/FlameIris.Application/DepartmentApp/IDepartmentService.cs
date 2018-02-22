@@ -11,7 +11,7 @@ namespace FlameIris.Application.DepartmentApp
         Department Create(DepartmentDto dto);
         List<DepartmentDto> GetList();
         DepartmentDto GetModel(long id);
-        Department Update(DepartmentDto department);
+        Department Update(DepartmentDto dto);
         void Delete(long[] ids);
 
     }
