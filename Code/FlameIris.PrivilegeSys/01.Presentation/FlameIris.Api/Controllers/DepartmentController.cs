@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlameIris.Api.Models.Filters;
-using FlameIris.Api.Models.Inputs;
-using FlameIris.Application.ManagerApp;
-using FlameIris.Application.ManagerApp.Dtos;
+using FlameIris.Application.DepartmentApp;
+using FlameIris.Application.DepartmentApp.Dtos;
 using FlameIris.Utility.Json;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NLog;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace FlameIris.Api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Manager/[action]")]
-    public class ManagerController : Controller
+    [Route("api/department/[action]")]
+    public class DepartmentController : Controller
     {
         static Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IManagerService _managerService;
-        public ManagerController(IManagerService managerService)
+        private readonly IDepartmentService _departmentService;
+        public DepartmentController(IDepartmentService departmentService)
         {
-            _managerService = managerService;
+            _departmentService = departmentService;
         }
 
         /// <summary>
@@ -28,21 +30,21 @@ namespace FlameIris.Api.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public AjaxResult Create(ManagerDto dto)
+        public AjaxResult Create(DepartmentDto dto)
         {
-            var manager = _managerService.Create(dto);
-            if (manager == null)
+            var department = _departmentService.Create(dto);
+            if (department == null)
                 return AjaxResult.Error("添加用户失败");
-            return AjaxResult.Success(manager.Id);
+            return AjaxResult.Success(department.Id);
         }
         /// <summary>
         /// 查询列表&分页
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public AjaxResult GetList(ManagerFilter filter)
+        public AjaxResult GetList(DepartmentFilter filter)
         {
-            var list = _managerService.GetList();
+            var list = _departmentService.GetList();
             return AjaxResult.Success(list);
         }
         /// <summary>
@@ -52,19 +54,19 @@ namespace FlameIris.Api.Controllers
         /// <returns></returns>
         public AjaxResult GetModel(long id)
         {
-            var model = _managerService.GetModel(id);
+            var model = _departmentService.GetModel(id);
             if (model == null)
                 return AjaxResult.Error("没有找到此记录");
-            return AjaxResult.Success(_managerService.GetModel(id));
+            return AjaxResult.Success(_departmentService.GetModel(id));
         }
         /// <summary>
         /// 更新
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public AjaxResult Update(ManagerDto dto)
+        public AjaxResult Update(DepartmentDto dto)
         {
-            var model = _managerService.Update(dto);
+            var model = _departmentService.Update(dto);
             if (model == null)
                 return AjaxResult.Error("修改用户失败");
             return AjaxResult.Success();
@@ -80,7 +82,7 @@ namespace FlameIris.Api.Controllers
             {
                 var idsStr = idStr.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 var ids = Array.ConvertAll(idsStr, x => Convert.ToInt64(x));
-                _managerService.Delete(ids);
+                _departmentService.Delete(ids);
             }
             catch (Exception ex)
             {
@@ -88,6 +90,5 @@ namespace FlameIris.Api.Controllers
             }
             return AjaxResult.Success();
         }
-
     }
 }

@@ -3,24 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FlameIris.Api.Models.Filters;
-using FlameIris.Api.Models.Inputs;
-using FlameIris.Application.ManagerApp;
-using FlameIris.Application.ManagerApp.Dtos;
+using FlameIris.Application.RoleApp;
+using FlameIris.Application.RoleApp.Dtos;
 using FlameIris.Utility.Json;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
 namespace FlameIris.Api.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Manager/[action]")]
-    public class ManagerController : Controller
+    [Route("api/Role/[action]")]
+    public class RoleController : Controller
     {
         static Logger Logger = LogManager.GetCurrentClassLogger();
-        private readonly IManagerService _managerService;
-        public ManagerController(IManagerService managerService)
+        private readonly IRoleService _roleService;
+        public RoleController(IRoleService roleService)
         {
-            _managerService = managerService;
+            _roleService = roleService;
         }
 
         /// <summary>
@@ -28,21 +29,21 @@ namespace FlameIris.Api.Controllers
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public AjaxResult Create(ManagerDto dto)
+        public AjaxResult Create(RoleDto dto)
         {
-            var manager = _managerService.Create(dto);
-            if (manager == null)
-                return AjaxResult.Error("添加用户失败");
-            return AjaxResult.Success(manager.Id);
+            var role = _roleService.Create(dto);
+            if (role == null)
+                return AjaxResult.Error("添加角色失败");
+            return AjaxResult.Success(role.Id);
         }
         /// <summary>
         /// 查询列表&分页
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public AjaxResult GetList(ManagerFilter filter)
+        public AjaxResult GetList(RoleFilter filter)
         {
-            var list = _managerService.GetList();
+            var list = _roleService.GetList();
             return AjaxResult.Success(list);
         }
         /// <summary>
@@ -52,19 +53,19 @@ namespace FlameIris.Api.Controllers
         /// <returns></returns>
         public AjaxResult GetModel(long id)
         {
-            var model = _managerService.GetModel(id);
+            var model = _roleService.GetModel(id);
             if (model == null)
                 return AjaxResult.Error("没有找到此记录");
-            return AjaxResult.Success(_managerService.GetModel(id));
+            return AjaxResult.Success(_roleService.GetModel(id));
         }
         /// <summary>
         /// 更新
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        public AjaxResult Update(ManagerDto dto)
+        public AjaxResult Update(RoleDto dto)
         {
-            var model = _managerService.Update(dto);
+            var model = _roleService.Update(dto);
             if (model == null)
                 return AjaxResult.Error("修改用户失败");
             return AjaxResult.Success();
@@ -80,7 +81,7 @@ namespace FlameIris.Api.Controllers
             {
                 var idsStr = idStr.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 var ids = Array.ConvertAll(idsStr, x => Convert.ToInt64(x));
-                _managerService.Delete(ids);
+                _roleService.Delete(ids);
             }
             catch (Exception ex)
             {
@@ -88,6 +89,5 @@ namespace FlameIris.Api.Controllers
             }
             return AjaxResult.Success();
         }
-
     }
 }
