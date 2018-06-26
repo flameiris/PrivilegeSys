@@ -25,3 +25,8 @@
 /Code/FlameIris.PrivilegeSys/02.Application/FlameIris.Application/bin/Debug/netcoreapp2.0
 /Code/FlameIris.PrivilegeSys/01.Presentation/FlameIris.Api/obj
 /Code/FlameIris.PrivilegeSys/01.Presentation/FlameIris.Api/bin/Debug/netcoreapp2.0
+/Code/FlameIris.PrivilegeSys/01.Presentation/FlameIris.Api/bin/Release
+/Code/FlameIris.PrivilegeSys/02.Application/FlameIris.Application/bin/Release/netcoreapp2.0
+/Code/FlameIris.PrivilegeSys/03.Domain/FlameIris.Domain/bin/Release/netcoreapp2.0
+/Code/FlameIris.PrivilegeSys/04.Infrastructure/FlameIris.Utility/bin/Release/netcoreapp2.0
+/Code/FlameIris.PrivilegeSys/04.Infrastructure/FlameIris.EntityFrameworkCore/bin/Release/netcoreapp2.0
