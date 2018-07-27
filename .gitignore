@@ -30,3 +30,5 @@
 /Code/FlameIris.PrivilegeSys/03.Domain/FlameIris.Domain/bin/Release/netcoreapp2.0
 /Code/FlameIris.PrivilegeSys/04.Infrastructure/FlameIris.Utility/bin/Release/netcoreapp2.0
 /Code/FlameIris.PrivilegeSys/04.Infrastructure/FlameIris.EntityFrameworkCore/bin/Release/netcoreapp2.0
+/Code/FlameIris.PrivilegeSys/OcelotGateway/obj
+/Code/FlameIris.PrivilegeSys/OcelotGateway/bin

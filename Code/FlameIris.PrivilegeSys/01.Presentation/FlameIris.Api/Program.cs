@@ -20,7 +20,7 @@ namespace FlameIris.Api
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
-                .UseUrls("http://*:6001")
+                .UseUrls("http://*:8002")
                 .Build();
     }
 }

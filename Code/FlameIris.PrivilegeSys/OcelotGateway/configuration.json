@@ -1,0 +1,151 @@
+﻿{
+
+
+  "ReRoutes": [
+
+
+    {
+
+
+      "DownstreamPathTemplate": "/api/home/index",
+
+
+      "DownstreamScheme": "http",
+
+
+      "DownstreamPort": 8001,
+
+
+      "DownstreamHost": "localhost",
+
+
+      "UpstreamPathTemplate": "/api/home/index",
+
+
+      "UpstreamHttpMethod": [ "Get" ],
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8001
+        }
+      ],
+
+
+      "QoSOptions": {
+
+
+        "ExceptionsAllowedBeforeBreaking": 3,
+
+
+        "DurationOfBreak": 10,
+
+
+        "TimeoutValue": 5000
+
+
+      },
+
+
+      "HttpHandlerOptions": {
+
+
+        "AllowAutoRedirect": false,
+
+
+        "UseCookieContainer": false
+
+
+      },
+
+
+      "AuthenticationOptions": {
+
+
+        "AuthenticationProviderKey": "",
+
+
+        "AllowedScopes": []
+
+
+      }
+
+
+    },
+
+
+    {
+
+
+      "DownstreamPathTemplate": "/api/home/index",
+
+
+      "DownstreamScheme": "http",
+
+
+      "DownstreamPort": 8002,
+
+
+      "DownstreamHost": "localhost",
+
+
+      "UpstreamPathTemplate": "/api/home/index",
+
+
+      "UpstreamHttpMethod": [ "Get" ],
+
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 8002
+        }
+      ],
+
+      "QoSOptions": {
+
+
+        "ExceptionsAllowedBeforeBreaking": 3,
+
+
+        "DurationOfBreak": 10,
+
+
+        "TimeoutValue": 5000
+
+
+      },
+
+
+      "HttpHandlerOptions": {
+
+
+        "AllowAutoRedirect": false,
+
+
+        "UseCookieContainer": false
+
+
+      },
+
+
+      "AuthenticationOptions": {
+
+
+        "AuthenticationProviderKey": "",
+
+
+        "AllowedScopes": []
+
+
+      }
+
+
+    }
+
+
+
+
+  ]
+
+
+}
