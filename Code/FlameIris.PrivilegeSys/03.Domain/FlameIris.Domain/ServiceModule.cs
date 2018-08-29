@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FlameIris.EntityFrameworkCore
+namespace FlameIris.Domain
 {
     public class ServiceModule : Module
     {

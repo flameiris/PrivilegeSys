@@ -65,7 +65,7 @@ namespace FlameIris.Api.Controllers
         public AjaxResult Update(ManagerDto dto)
         {
             var model = _managerService.Update(dto);
-            if (model == null)
+            if (!model)
                 return AjaxResult.Error("修改用户失败");
             return AjaxResult.Success();
         }

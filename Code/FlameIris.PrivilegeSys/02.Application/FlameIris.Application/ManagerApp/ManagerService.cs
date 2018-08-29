@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using FlameIris.Application.ManagerApp.Dtos;
-using FlameIris.Domain.Enities;
-using FlameIris.Domain.IRepositories;
 using AutoMapper;
+using FlameIris.EntityFrameworkCore.Enities;
+using FlameIris.Domain.IRepositories;
 
 namespace FlameIris.Application.ManagerApp
 {
@@ -32,7 +32,10 @@ namespace FlameIris.Application.ManagerApp
                 Password = dto.Password,
                 DeptId = dto.DeptId
             };
-            return _managerRepository.Insert(manager);
+            _managerRepository.Insert(manager);
+            if (_managerRepository.SaveChanges() > 0)
+                return manager;
+            return null;
         }
         public List<ManagerDto> GetList()
         {
@@ -42,13 +45,20 @@ namespace FlameIris.Application.ManagerApp
         {
             return Mapper.Map<ManagerDto>(_managerRepository.FirstOrDefault(x => x.Id == id));
         }
-        public Manager Update(ManagerDto dto)
+        public bool Update(ManagerDto dto)
         {
-            return _managerRepository.Update(Mapper.Map<Manager>(dto));
+            var manager = Mapper.Map<Manager>(dto);
+            _managerRepository.Update(manager);
+            return _managerRepository.SaveChanges() > 0;
         }
         public void Delete(long[] ids)
         {
-            _managerRepository.Delete(x => ids.Contains(x.Id));
+            var managerList = _managerRepository.GetList(x => ids.Contains(x.Id));
+            foreach (var item in managerList)
+            {
+                _managerRepository.Delete(item);
+            }
+            _managerRepository.SaveChanges();
         }
     }
 }

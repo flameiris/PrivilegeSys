@@ -1,5 +1,5 @@
 ﻿using FlameIris.Application.ManagerApp.Dtos;
-using FlameIris.Domain.Enities;
+using FlameIris.EntityFrameworkCore.Enities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +11,7 @@ namespace FlameIris.Application.ManagerApp
         Manager Create(ManagerDto dto);
         List<ManagerDto> GetList();
         ManagerDto GetModel(long id);
-        Manager Update(ManagerDto dto);
+        bool Update(ManagerDto dto);
         void Delete(long[] ids);
     }
 }

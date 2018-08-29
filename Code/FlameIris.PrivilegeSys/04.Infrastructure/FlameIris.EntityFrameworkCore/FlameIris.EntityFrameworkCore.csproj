@@ -10,8 +10,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\03.Domain\FlameIris.Domain\FlameIris.Domain.csproj" />
-  </ItemGroup>
-
 </Project>

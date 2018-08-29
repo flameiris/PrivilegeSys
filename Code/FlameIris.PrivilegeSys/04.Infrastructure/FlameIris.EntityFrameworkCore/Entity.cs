@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace FlameIris.Domain
+namespace FlameIris.EntityFrameworkCore
 {
     /// <summary>
     /// 泛型实体基类

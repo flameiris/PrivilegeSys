@@ -1,10 +1,11 @@
-﻿using FlameIris.Domain.Enities;
+﻿using FlameIris.EntityFrameworkCore.Enities;
 using FlameIris.Domain.IRepositories;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using FlameIris.EntityFrameworkCore;
 
-namespace FlameIris.EntityFrameworkCore.Repositories
+namespace FlameIris.Domain.Repositories
 {
     public class ManagerRepository : FlameIrisRepositoryBase<Manager, Int64>, IManagerRepository
     {
@@ -13,6 +14,6 @@ namespace FlameIris.EntityFrameworkCore.Repositories
 
         }
 
-        
+
     }
 }

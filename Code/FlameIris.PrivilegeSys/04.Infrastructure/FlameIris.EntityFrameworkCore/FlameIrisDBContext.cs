@@ -1,5 +1,5 @@
 ﻿using System;
-using FlameIris.Domain.Enities;
+using FlameIris.EntityFrameworkCore.Enities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 

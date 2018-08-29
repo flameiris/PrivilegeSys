@@ -1,8 +1,10 @@
-﻿using System;
+﻿using FlameIris.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace FlameIris.Domain.IRepositories
 {
@@ -20,88 +22,214 @@ namespace FlameIris.Domain.IRepositories
     /// <typeparam name="TPrimaryKey">主键类型</typeparam>
     public interface IRepository<TEntity, TPrimaryKey> : IRepository where TEntity : Entity<TPrimaryKey>
     {
+        #region Select/Get/Query
+
         /// <summary>
-        /// 获取实体集合
+        /// Used to get a IQueryable that is used to retrieve entities from entire table.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>IQueryable to be used to select entities from database</returns>
+        IQueryable<TEntity> GetAll();
+
+        /// <summary>
+        /// Used to get all entities.
+        /// </summary>
+        /// <returns>List of all entities</returns>
         List<TEntity> GetAllList();
 
         /// <summary>
-        /// 根据lambda表达式条件获取实体集合
+        /// Used to get all entities.
         /// </summary>
-        /// <param name="predicate">lambda表达式条件</param>
-        /// <returns></returns>
-        List<TEntity> GetAllList(Expression<Func<TEntity, bool>> predicate);
+        /// <returns>List of all entities</returns>
+        Task<List<TEntity>> GetAllListAsync();
 
         /// <summary>
-        /// 根据主键获取实体
+        /// Used to get all entities based on given <paramref name="predicate"/>.
         /// </summary>
-        /// <param name="id">实体主键</param>
-        /// <returns></returns>
-        TEntity Get(TPrimaryKey id);
+        /// <param name="predicate">A condition to filter entities</param>
+        /// <returns>List of all entities</returns>
+        List<TEntity> GetList(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>  
+        /// Used to get all entities based on given <paramref name="predicate"/>.
+        /// </summary>
+        /// <param name="predicate">A condition to filter entities</param>
+        /// <returns>List of all entities</returns>
+        Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> predicate);
+
 
         /// <summary>
-        /// 根据lambda表达式条件获取单个实体
+        /// Gets exactly one entity with given predicate.
+        /// Throws exception if no entity or more than one entity.
         /// </summary>
-        /// <param name="predicate">lambda表达式条件</param>
-        /// <returns></returns>
+        /// <param name="predicate">Entity</param>
+        TEntity Single(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// Gets exactly one entity with given predicate.
+        /// Throws exception if no entity or more than one entity.
+        /// </summary>
+        /// <param name="predicate">Entity</param>
+        Task<TEntity> SingleAsync(Expression<Func<TEntity, bool>> predicate);
+
+
+        /// <summary>
+        /// Gets an entity with given given predicate or null if not found.
+        /// </summary>
+        /// <param name="predicate">Predicate to filter entities</param>
         TEntity FirstOrDefault(Expression<Func<TEntity, bool>> predicate);
 
         /// <summary>
-        /// 新增实体
+        /// Gets an entity with given given predicate or null if not found.
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="autoSave">是否立即执行保存</param>
+        /// <param name="predicate">Predicate to filter entities</param>
+        Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
+
+        #endregion
+
+        #region Insert
+
+        /// <summary>
+        /// Inserts a new entity.
+        /// </summary>
+        /// <param name="entity">Inserted entity</param>
+        void Insert(TEntity entity);
+
+        /// <summary>
+        /// Inserts a new entity.
+        /// </summary>
+        /// <param name="entity">Inserted entity</param>
+        Task InsertAsync(TEntity entity);
+
+        /// <summary>
+        /// Inserts list entity.
+        /// </summary>
+        /// <param name="listEntity"></param>
         /// <returns></returns>
-        TEntity Insert(TEntity entity, bool autoSave = true);
+        Task InsertAsync(List<TEntity> listEntity);
 
         /// <summary>
-        /// 更新实体
+        /// Inserts list entity
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="autoSave">是否立即执行保存</param>
-        TEntity Update(TEntity entity, bool autoSave = true);
+        /// <param name="listEntity"></param>
+        void Insert(List<TEntity> listEntity);
+
+        #endregion
+
+        #region Update
 
         /// <summary>
-        /// 新增或更新实体
+        /// Updates an existing entity.
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="autoSave">是否立即执行保存</param>
-        TEntity InsertOrUpdate(TEntity entity, bool autoSave = true);
+        /// <param name="entity">Entity</param>
+        void Update(TEntity entity);
 
         /// <summary>
-        /// 删除实体
+        /// 批量更新
         /// </summary>
-        /// <param name="entity">要删除的实体</param>
-        /// <param name="autoSave">是否立即执行保存</param>
-        void Delete(TEntity entity, bool autoSave = true);
+        /// <param name="listEntity"></param>
+        void Update(List<TEntity> listEntity);
+
+        #endregion
+
+        #region Delete
 
         /// <summary>
-        /// 删除实体
+        /// Deletes an entity.
         /// </summary>
-        /// <param name="id">实体主键</param>
-        /// <param name="autoSave">是否立即执行保存</param>
-        void Delete(TPrimaryKey id, bool autoSave = true);
+        /// <param name="entity">Entity to be deleted</param>
+        void Delete(TEntity entity);
+
+        #endregion
+
+        #region Aggregates
 
         /// <summary>
-        /// 根据条件删除实体
+        /// Gets count of all entities in this repository.
         /// </summary>
-        /// <param name="where">lambda表达式</param>
-        /// <param name="autoSave">是否自动保存</param>
-        void Delete(Expression<Func<TEntity, bool>> where, bool autoSave = true);
+        /// <returns>Count of entities</returns>
+        int Count();
+
+        Task<int> CountAsync();
 
         /// <summary>
-        /// 分页获取数据
+        /// Gets count of all entities in this repository based on given <paramref name="predicate"/>.
         /// </summary>
-        /// <param name="startPage">起始页</param>
-        /// <param name="pageSize">页面条目</param>
-        /// <param name="rowCount">数据总数</param>
-        /// <param name="where">查询条件</param>
-        /// <param name="order">排序</param>
+        /// <param name="predicate">A method to filter count</param>
+        /// <returns>Count of entities</returns>
+        int Count(Expression<Func<TEntity, bool>> predicate);
+
+        Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// Gets count of all entities in this repository (use if expected return value is greather than <see cref="int.MaxValue"/>.
+        /// </summary>
+        /// <returns>Count of entities</returns>
+        long LongCount();
+
+        /// <summary>
+        /// Gets count of all entities in this repository (use if expected return value is greather than <see cref="int.MaxValue"/>.
+        /// </summary>
+        /// <returns>Count of entities</returns>
+        Task<long> LongCountAsync();
+
+        /// <summary>
+        /// Gets count of all entities in this repository based on given <paramref name="predicate"/>
+        /// (use this overload if expected return value is greather than <see cref="int.MaxValue"/>).
+        /// </summary>
+        /// <param name="predicate">A method to filter count</param>
+        /// <returns>Count of entities</returns>
+        long LongCount(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// Gets count of all entities in this repository based on given <paramref name="predicate"/>
+        /// (use this overload if expected return value is greather than <see cref="int.MaxValue"/>).
+        /// </summary>
+        /// <param name="predicate">A method to filter count</param>
+        /// <returns>Count of entities</returns>
+        Task<long> LongCountAsync(Expression<Func<TEntity, bool>> predicate);
+
+        #endregion
+
+        #region SaveChanges
+
+        /// <summary>
+        /// 保存
+        /// </summary>
         /// <returns></returns>
-        IQueryable<TEntity> LoadPageList(int startPage, int pageSize, out int rowCount, Expression<Func<TEntity, bool>> where, Expression<Func<TEntity, object>> order);
+        int SaveChanges();
 
-        void Save();
+        /// <summary>
+        /// 异步保存
+        /// </summary>
+        /// <returns></returns>
+        Task<int> SaveChangesAsync();
+
+        #endregion
+
+        #region GetDbContext
+
+        /// <summary>
+        /// 获取Context
+        /// </summary>
+        /// <returns></returns>
+        FlameIrisDBContext GetDbContext();
+        #endregion
+
+        #region Others
+        /// <summary>
+        /// 是否存在
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        bool Any(Expression<Func<TEntity, bool>> predicate);
+
+        /// <summary>
+        /// 判断是否存在
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
+        #endregion
 
     }
 

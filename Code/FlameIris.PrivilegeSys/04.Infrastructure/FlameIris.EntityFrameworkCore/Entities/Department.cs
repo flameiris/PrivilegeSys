@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FlameIris.Domain.Enities
+namespace FlameIris.EntityFrameworkCore.Enities
 {
     public partial class Department : Entity<Int64>
     {
