@@ -1,5 +1,5 @@
 ﻿using FlameIris.Application.PrivilegeApp.Dtos;
-using FlameIris.Domain.Enities;
+using FlameIris.EntityFrameworkCore.Enities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +11,7 @@ namespace FlameIris.Application.PrivilegeApp
         Privilege Create(PrivilegeDto dto);
         List<PrivilegeDto> GetList();
         PrivilegeDto GetModel(long id);
-        Privilege Update(PrivilegeDto dto);
+        bool Update(PrivilegeDto dto);
         void Delete(long[] ids);
     }
 }

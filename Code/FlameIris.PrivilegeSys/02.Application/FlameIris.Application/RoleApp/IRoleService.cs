@@ -1,5 +1,5 @@
 ﻿using FlameIris.Application.RoleApp.Dtos;
-using FlameIris.Domain.Enities;
+using FlameIris.EntityFrameworkCore.Enities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +11,7 @@ namespace FlameIris.Application.RoleApp
         Role Create(RoleDto dto);
         List<RoleDto> GetList();
         RoleDto GetModel(long id);
-        Role Update(RoleDto dto);
+        bool Update(RoleDto dto);
         void Delete(long[] ids);
     }
 }

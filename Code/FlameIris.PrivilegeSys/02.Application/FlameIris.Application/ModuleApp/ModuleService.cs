@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FlameIris.Application.ModuleApp.Dtos;
-using FlameIris.Domain.Enities;
 using FlameIris.Domain.IRepositories;
+using FlameIris.EntityFrameworkCore.Enities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +28,10 @@ namespace FlameIris.Application.ModuleApp
             {
 
             };
-            return _moduleRepository.Insert(module);
+            _moduleRepository.Insert(module);
+            if (_moduleRepository.SaveChanges() > 0)
+                return module;
+            return null;
         }
         public List<ModuleDto> GetList()
         {
@@ -38,13 +41,20 @@ namespace FlameIris.Application.ModuleApp
         {
             return Mapper.Map<ModuleDto>(_moduleRepository.FirstOrDefault(x => x.Id == id));
         }
-        public Module Update(ModuleDto dto)
+        public bool Update(ModuleDto dto)
         {
-            return _moduleRepository.Update(Mapper.Map<Module>(dto));
+            var module = Mapper.Map<Module>(dto);
+            _moduleRepository.Update(module);
+            return _moduleRepository.SaveChanges() > 0;
         }
         public void Delete(long[] ids)
         {
-            _moduleRepository.Delete(x => ids.Contains(x.Id));
+            var moduleList = _moduleRepository.GetList(x => ids.Contains(x.Id));
+            foreach (var item in moduleList)
+            {
+                _moduleRepository.Delete(item);
+            }
+            _moduleRepository.SaveChanges();
         }
     }
 }

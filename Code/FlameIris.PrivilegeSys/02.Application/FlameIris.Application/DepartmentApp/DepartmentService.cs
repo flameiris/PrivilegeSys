@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FlameIris.Application.DepartmentApp.Dtos;
-using FlameIris.Domain.Enities;
 using FlameIris.Domain.IRepositories;
+using FlameIris.EntityFrameworkCore.Enities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,10 @@ namespace FlameIris.Application.DepartmentApp
         {
             Department department = new Department
             { };
-            return _departmentRepository.Insert(department);
+            _departmentRepository.Insert(department);
+            if (_departmentRepository.SaveChanges() > 0)
+                return department;
+            return null;
         }
         public List<DepartmentDto> GetList()
         {
@@ -36,13 +39,20 @@ namespace FlameIris.Application.DepartmentApp
         {
             return Mapper.Map<DepartmentDto>(_departmentRepository.FirstOrDefault(x => x.Id == id));
         }
-        public Department Update(DepartmentDto dto)
+        public bool Update(DepartmentDto dto)
         {
-            return _departmentRepository.Update(Mapper.Map<Department>(dto));
+            var department = Mapper.Map<Department>(dto);
+            _departmentRepository.Update(department);
+            return _departmentRepository.SaveChanges() > 0;
         }
         public void Delete(long[] ids)
         {
-            _departmentRepository.Delete(x => ids.Contains(x.Id));
+            var deptList = _departmentRepository.GetList(x => ids.Contains(x.Id));
+            foreach (var item in deptList)
+            {
+                _departmentRepository.Delete(item);
+            }
+            _departmentRepository.SaveChanges();
         }
     }
 }

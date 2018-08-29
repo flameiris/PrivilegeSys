@@ -66,8 +66,8 @@ namespace FlameIris.Api.Controllers
         /// <returns></returns>
         public AjaxResult Update(PrivilegeDto dto)
         {
-            var model = _privilegeService.Update(dto);
-            if (model == null)
+            var flag = _privilegeService.Update(dto);
+            if (!flag)
                 return AjaxResult.Error("修改用户失败");
             return AjaxResult.Success();
         }

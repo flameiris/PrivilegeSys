@@ -65,8 +65,8 @@ namespace FlameIris.Api.Controllers
         /// <returns></returns>
         public AjaxResult Update(RoleDto dto)
         {
-            var model = _roleService.Update(dto);
-            if (model == null)
+            var flag = _roleService.Update(dto);
+            if (!flag)
                 return AjaxResult.Error("修改用户失败");
             return AjaxResult.Success();
         }

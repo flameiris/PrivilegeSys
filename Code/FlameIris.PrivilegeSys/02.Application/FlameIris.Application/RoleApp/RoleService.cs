@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FlameIris.Application.RoleApp.Dtos;
-using FlameIris.Domain.Enities;
+using FlameIris.EntityFrameworkCore.Enities;
 using FlameIris.Domain.IRepositories;
 using System;
 using System.Collections.Generic;
@@ -29,7 +29,10 @@ namespace FlameIris.Application.RoleApp
             {
 
             };
-            return _roleRepository.Insert(role);
+            _roleRepository.Insert(role);
+            if (_roleRepository.SaveChanges() > 0)
+                return role;
+            return null;
         }
         public List<RoleDto> GetList()
         {
@@ -39,13 +42,20 @@ namespace FlameIris.Application.RoleApp
         {
             return Mapper.Map<RoleDto>(_roleRepository.FirstOrDefault(x => x.Id == id));
         }
-        public Role Update(RoleDto dto)
+        public bool Update(RoleDto dto)
         {
-            return _roleRepository.Update(Mapper.Map<Role>(dto));
+            var role = Mapper.Map<Role>(dto);
+            _roleRepository.Update(role);
+            return _roleRepository.SaveChanges() > 0;
         }
         public void Delete(long[] ids)
         {
-            _roleRepository.Delete(x => ids.Contains(x.Id));
+            var roleList = _roleRepository.GetList(x => ids.Contains(x.Id));
+            foreach (var item in roleList)
+            {
+                _roleRepository.Delete(item);
+            }
+            _roleRepository.SaveChanges();
         }
     }
 }

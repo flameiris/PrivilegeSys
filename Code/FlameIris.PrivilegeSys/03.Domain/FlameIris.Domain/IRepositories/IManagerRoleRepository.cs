@@ -1,4 +1,4 @@
-﻿using FlameIris.Domain.Enities;
+﻿using FlameIris.EntityFrameworkCore.Enities;
 using System;
 using System.Collections.Generic;
 using System.Text;

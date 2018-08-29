@@ -1,5 +1,6 @@
-﻿using FlameIris.Domain.Enities;
-using FlameIris.Domain.IRepositories;
+﻿using FlameIris.Domain.IRepositories;
+using FlameIris.Domain.Repositories;
+using FlameIris.EntityFrameworkCore.Enities;
 using System;
 using System.Collections.Generic;
 using System.Text;

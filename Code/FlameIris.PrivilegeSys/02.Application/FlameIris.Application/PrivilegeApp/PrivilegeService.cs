@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using FlameIris.Application.PrivilegeApp.Dtos;
-using FlameIris.Domain.Enities;
 using FlameIris.Domain.IRepositories;
+using FlameIris.EntityFrameworkCore.Enities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +27,10 @@ namespace FlameIris.Application.PrivilegeApp
             Privilege privilege = new Privilege
             {
             };
-            return _privilegeRepository.Insert(privilege);
+            _privilegeRepository.Insert(privilege);
+            if (_privilegeRepository.SaveChanges() > 0)
+                return privilege;
+            return null;
         }
         public List<PrivilegeDto> GetList()
         {
@@ -37,13 +40,20 @@ namespace FlameIris.Application.PrivilegeApp
         {
             return Mapper.Map<PrivilegeDto>(_privilegeRepository.FirstOrDefault(x => x.Id == id));
         }
-        public Privilege Update(PrivilegeDto dto)
+        public bool Update(PrivilegeDto dto)
         {
-            return _privilegeRepository.Update(Mapper.Map<Privilege>(dto));
+            var privilege = Mapper.Map<Privilege>(dto);
+            _privilegeRepository.Update(privilege);
+            return _privilegeRepository.SaveChanges() > 0;
         }
         public void Delete(long[] ids)
         {
-            _privilegeRepository.Delete(x => ids.Contains(x.Id));
+            var privilegeList = _privilegeRepository.GetList(x => ids.Contains(x.Id));
+            foreach (var item in privilegeList)
+            {
+                _privilegeRepository.Delete(item);
+            }
+            _privilegeRepository.SaveChanges();
         }
     }
 }

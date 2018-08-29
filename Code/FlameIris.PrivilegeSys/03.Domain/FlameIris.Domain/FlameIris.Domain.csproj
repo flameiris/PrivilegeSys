@@ -5,19 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="IRepositories\IDepartmentRepository.cs" />
-    <Compile Remove="IRepositories\IManagerRoleRepository.cs" />
-    <Compile Remove="IRepositories\IModuleRepository.cs" />
-    <Compile Remove="IRepositories\IPrivilegeRepository.cs" />
-    <Compile Remove="IRepositories\IRoleRepository.cs" />
-    <Compile Remove="Repositories\DepartmentRepository.cs" />
-    <Compile Remove="Repositories\ManagerRoleRepository.cs" />
-    <Compile Remove="Repositories\ModuleRepository.cs" />
-    <Compile Remove="Repositories\PrivilegeRepository.cs" />
-    <Compile Remove="Repositories\RoleRepository.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\04.Infrastructure\FlameIris.EntityFrameworkCore\FlameIris.EntityFrameworkCore.csproj" />
   </ItemGroup>
 

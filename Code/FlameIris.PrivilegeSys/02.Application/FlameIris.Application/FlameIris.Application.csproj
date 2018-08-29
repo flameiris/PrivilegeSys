@@ -5,21 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="DepartmentApp\**" />
-    <Compile Remove="ModuleApp\**" />
-    <Compile Remove="PrivilegeApp\**" />
-    <Compile Remove="RoleApp\**" />
-    <EmbeddedResource Remove="DepartmentApp\**" />
-    <EmbeddedResource Remove="ModuleApp\**" />
-    <EmbeddedResource Remove="PrivilegeApp\**" />
-    <EmbeddedResource Remove="RoleApp\**" />
-    <None Remove="DepartmentApp\**" />
-    <None Remove="ModuleApp\**" />
-    <None Remove="PrivilegeApp\**" />
-    <None Remove="RoleApp\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="AutoMapper" Version="6.2.2" />
   </ItemGroup>
@@ -27,6 +12,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\03.Domain\FlameIris.Domain\FlameIris.Domain.csproj" />
     <ProjectReference Include="..\..\04.Infrastructure\FlameIris.EntityFrameworkCore\FlameIris.EntityFrameworkCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ArticleApp\Dtos\" />
+    <Folder Include="BaseApp\" />
+    <Folder Include="CategoryApp\Dtos\" />
   </ItemGroup>
 
 </Project>
