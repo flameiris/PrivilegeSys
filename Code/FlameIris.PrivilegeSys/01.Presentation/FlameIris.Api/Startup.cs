@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Configuration;
 using Autofac.Extensions.DependencyInjection;
+using Consul;
 using FlameIris.Application;
 using FlameIris.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
@@ -74,6 +75,48 @@ namespace FlameIris.Api
             loggerFactory.AddNLog();//添加NLog
             env.ConfigureNLog("StaticConfig/nlog.config");//读取Nlog配置文件
             #endregion
+
+
+            #region 注册到Consul服务中心
+            RegisterServiceToServiceCenter();
+            #endregion
+
         }
+
+
+
+        /// <summary>
+        /// 注册到Consul服务中心
+        /// </summary>
+        private void RegisterServiceToServiceCenter()
+        {
+            //资源 Api IP
+            var ip = Configuration["ConsulSettings:ServiceIP"];
+            //资源 Api 端口
+            var port = int.Parse(Configuration["ConsulSettings:ServicePort"]);
+            //服务客户端
+            var client = new ConsulClient(obj =>
+            {
+                obj.Address = new Uri(Configuration["ConsulSettings:ServiceCenterUrl"]);
+                obj.Datacenter = "dc1";
+            });
+            //资源 Api 封装成 服务客户端， 注册到 Consul服务中心 
+            var result = client.Agent.ServiceRegister(new AgentServiceRegistration()
+            {
+                ID = "api" + Guid.NewGuid(),//服务编号，不能重复，用 Guid 最简单
+                Name = "api",//服务的名字
+                Address = ip,//我的 ip 地址(可以被其他应用访问的地址，本地测试可以用 127.0.0.1，机房环境中一定要写自己的内网 ip 地址)
+                Port = port,//我的端口
+                Check = new AgentServiceCheck
+                {
+                    DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),//服务停止多久后反注册
+                    Interval = TimeSpan.FromSeconds(10),//健康检查时间间隔，或者称为心跳间隔
+                    HTTP = $"http://{ip}:{port}/api/home/index",//健康检查地址
+                    Timeout = TimeSpan.FromSeconds(5)
+                }
+            });
+        }
+
     }
+
 }
